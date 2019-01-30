@@ -8,7 +8,7 @@
 
 ### 代码风格
 
-```
+```javascript
 function say() {
   console.log('hello world')
 }
@@ -82,7 +82,7 @@ if (true ){
 
 ### 2.1 初步实现Apache功能
 
-```
+```javascript
 var http = require('http')
 var fs = require('fs')
 
@@ -159,7 +159,7 @@ server.listen(3000, function () {
 
 > **Apache功能模拟函数的内部肯定不能像上面那么写，我们试着找找规律就会发现，`request.url`返回的就是我们输入的url地址，规律找到了，接下来就来实现它。
 
-```
+```javascript
 var http = require('http')
 var fs = require('fs')
 
@@ -200,7 +200,7 @@ server.listen(3000, function () {
 
 > **我们在运行Apache的时候，如果www目录当中没有index.html页面的话。会出现www文件夹的目录，这要实现的话需要一个新的API：`fs.readdir`(注意`readdir`全小写格式)**
 
-```
+```javascript
 var fs = require('fs')
 
 fs.readdir('./', function (err, files) {
@@ -214,7 +214,7 @@ fs.readdir('./', function (err, files) {
 
 > **既然能够读取到文件夹中的文件名和文件类型信息就好办了，我们可以动态的生成文件信息。**
 
-```
+```javascript
 var http = require('http')
 var fs = require('fs')
 
@@ -270,7 +270,7 @@ server.listen(3000, function () {
 
 ### 3.1 在浏览器中使用模板引擎
 
-```
+```javascript
 <!--  art-template
 art-template 不仅可以在浏览器使用，也可以在 node 中使用
 
@@ -329,7 +329,7 @@ art-template 不仅可以在浏览器使用，也可以在 node 中使用
 
 > **在Node中没有script标签，所以要通过`fs.readFile`来读取文件当中的模板字符（{{ value }}），通过回调函数中的data，将读到的模板传给template的API。**
 
-```
+```javascript
 // 在 Node 中使用 art-template 模板引擎
 // 模板引起最早就是诞生于服务器领域，后来才发展到了前端。
 // 
@@ -388,7 +388,7 @@ fs.readFile('./tpl.html', function (err, data) {
 
 > `tpl.html`
 
-```
+```javascript
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -411,7 +411,7 @@ fs.readFile('./tpl.html', function (err, data) {
 
 > **在Apache功能函数当中加入模板引擎，目录需要通过回调函数的中的files对象传入，模板通过data对象传入。**
 
-```
+```javascript
 //模板的代码
 <tbody id="tbody">
       {{each files}}
@@ -425,7 +425,7 @@ fs.readFile('./tpl.html', function (err, data) {
   </table>
 ```
 
-```
+```javascript
 var http = require('http')
 var fs = require('fs')
 var template = require('art-template')
@@ -488,7 +488,7 @@ server.on('request', function (req, res) {
 
 > **index.html 页面**
 
-```
+```javascript
 <!DOCTYPE html>
 <html lang="en">
 
@@ -540,7 +540,7 @@ server.on('request', function (req, res) {
 
 > **post.html 页面**
 
-```
+```javascript
 <!DOCTYPE html>
 <html lang="en">
 
@@ -588,7 +588,7 @@ server.on('request', function (req, res) {
 
 > **后台服务器代码hello.js**
 
-```
+```javascript
 var fs = require('fs');
 var http = require('http');
 var template = require('art-template');
@@ -654,7 +654,87 @@ http.createServer(function(req, res) {
 })
 ```
 
-### 4.2 留言板功能的完善
+### 4.2 URL模块
+
+> **有一个URL核心模块，来处理客户端传过来的请求，`url = require('url') `来引入url这个模块，我们看一下url这个模块有哪些属性和方法。**
+
+```javascript
+var url = require('url');
+console.log(url);
+```
+
+
+
+```javascript
+$ node 08-url模块.js
+{ Url: [Function: Url],
+  parse: [Function: urlParse],
+  resolve: [Function: urlResolve],
+  resolveObject: [Function: urlResolveObject],
+  format: [Function: urlFormat],
+  URL: [Function: URL],
+  URLSearchParams: [Function: URLSearchParams],
+  domainToASCII: [Function: domainToASCII],
+  domainToUnicode: [Function: domainToUnicode],
+  pathToFileURL: [Function: pathToFileURL],
+  fileURLToPath: [Function: fileURLToPath] }
+
+```
+
+> **`url.parse()`可以将一个完整的URL地址，分为很多部分，常用的有：host、port、pathname、path、query。`url.parse(..., true)`有两个参数，第二个参数设置为true，`query`属性会生成一个对象，如果为false,则返回url对象上的`query`属性会是一个未解析，未解码的字符串，默认为false **
+
+```javascript
+var url = require('url');
+var obj = url.parse('/pinglun?name=jason&message=helloworld');
+console.log(obj);
+```
+
+
+
+```javascript
+$ node 08-url模块.js
+Url {
+  protocol: null,
+  slashes: null,
+  auth: null,
+  host: null,
+  port: null,
+  hostname: null,
+  hash: null,
+  search: '?name=jason&message=helloworld',
+  query: 'name=jason&message=helloworld',
+  pathname: '/pinglun',
+  path: '/pinglun?name=jason&message=helloworld',
+  href: '/pinglun?name=jason&message=helloworld' }
+
+```
+
+> **加上第二个参数true之后**
+
+```javascript
+var url = require('url');
+var obj = url.parse('/pinglun?name=jason&message=helloworld', true)
+console.log(obj);
+```
+
+```javascript
+Url {
+  protocol: null,
+  slashes: null,
+  auth: null,
+  host: null,
+  port: null,
+  hostname: null,
+  hash: null,
+  search: '?name=jason&message=helloworld',
+  query:[Object: null prototype] { name: 'jason', message: 'helloworld' },
+  pathname: '/pinglun',
+  path: '/pinglun?name=jason&message=helloworld',
+  href: '/pinglun?name=jason&message=helloworld' }
+
+```
+
+### 4.3 留言板功能的完善
 
 > 案例照着下面的步骤写：
 >
@@ -678,7 +758,7 @@ http.createServer(function(req, res) {
 >
 > ​		setHeader
 
-```
+```javascript
 // app application 应用程序
 // 把当前模块所有的依赖项都声明再文件模块最上面
 // 为了让目录结构保持统一清晰，所以我们约定，把所有的 HTML 文件都放到 views（视图） 目录中

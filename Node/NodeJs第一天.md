@@ -29,7 +29,7 @@
 
 2. 在命令行窗口当中运行`node hello.js`
 
-```
+```javascript
 C:\Users\Administrator\Desktop\node>node hello.js
 hello world
 C:\Users\Administrator\Desktop\node>
@@ -45,12 +45,12 @@ C:\Users\Administrator\Desktop\node>
 >
 > 例如：
 >
-> ```
+> ```node
 > fs.readFile//就是读取文件的操作
 > fs.writeFile//就是写入文件的操作	
 > ```
 
-```
+```javascript
 // 1. 使用 require 方法加载 fs 核心模块
 var fs = require('fs')
 
@@ -116,7 +116,7 @@ fs.writeFile('./data/你好.md', '大家好，给大家介绍一下，我是Node
 
 ### 5. Node构建http服务器
 
-```
+```javascript
 // 接下来，我们要干一件使用 Node 很有成就感的一件事儿
 // 你可以使用 Node 非常轻松的构建一个 Web 服务器
 // 在 Node 中专门提供了一个核心模块：http
@@ -147,9 +147,9 @@ server.listen(3000, function () {
 })
 ```
 
-> 注意：`request事件当中的回调函数当中有两个参数request与response,他们是两个对象。`
+> **注意：request事件当中的回调函数当中有两个参数request与response,他们是两个对象。**
 
-```
+```javascript
 var http = require('http')
 
 var server = http.createServer()
@@ -190,7 +190,7 @@ server.listen(3000, function () {
 
 > **接下来,让http服务器智能一点,可以通过传入的url,来响应不同的页面**
 
-```
+```javascript
 var http = require('http')
 
 // 1. 创建 Server
@@ -271,7 +271,7 @@ server.listen(3000, function () {
 
 > 首先,定义两个文件a.js 和 b.js
 
-```
+```javascript
 ***a.js文件***
 // require 方法有两个作用：
 //    1. 加载文件模块并执行里面的代码
@@ -300,7 +300,7 @@ fs.readFile('./a.js', function (err, data) {
 })
 ```
 
-```
+```javascript
 ***b.js文件***
 var foo = 'bbb'
 
@@ -336,7 +336,7 @@ function add(x, y) {
 >
 > ​	**任何需要联网的程序都需要绑定一个端口号进行通信**
 
-```
+```javascript
 // ip 地址用来定位计算机
 // 端口号用来定位具体的应用程序
 // 所有需要联网通信的应用程序都会占用一个端口号
@@ -365,7 +365,7 @@ server.listen(5000, function () {
 >
 > **用来规定响应头部的类型，以及编码格式**
 
-```
+```javascript
 var http = require('http')
 
 var server = http.createServer()
@@ -402,7 +402,7 @@ server.listen(3000, function () {
 
 > **在响应服务的时候肯定不能直接将页面以字符串的方式传递过来，一般是用`fs.readFile`将文件当中的信息读取出来，然后发送过来。**
 
-```
+```javascript
 // 1. 结合 fs 发送文件中的数据
 // 2. Content-Type
 //    http://tool.oschina.net/commons
