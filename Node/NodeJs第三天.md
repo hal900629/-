@@ -358,3 +358,43 @@ module.exports = function () {
 require('a')
 ```
 
+### 2.5 Package.json
+
+> **建议每一个项目都有一个`Package.json`文件（类似产品的说明书），里面包含了项目的有关信息。**
+
+```javascript
+{
+  "name": "demo",
+  "version": "0.0.1",
+  "description": "练习专用",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "练习"
+  ],
+  "author": "zhanghao",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.3.1"
+  }
+}
+```
+
+> **对于`package.json`文件，我们可以通过`npm init`来初始化出来**
+
+```shell
+package name: (新建文件夹) demo //项目名字
+version: (1.0.0) 0.0.1  //版本号
+description: 练习专用   //项目描述
+entry point: (index.js) main.js //项目的入口模块
+test command: //项目启动时脚本命令
+git repository: //如果你有 Git 地址，可以将这个项目放到你的 Git 仓库里
+keywords: 练习 //关键词
+author: zhanghao //作者叫啥
+license: (ISC) //项目要发行的时候需要的证书，平时玩玩忽略它
+```
+
+> **`npm install --save jquery`加上`--save`之后就可以将加载的第三方包，保存到`package.json`文件当中了，如果项目当中的`node-modules`不慎删除了，但是`package.json`还在，那直接运行`npm install`所有的包就都回来了**
+
