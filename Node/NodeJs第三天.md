@@ -300,7 +300,7 @@ module.exports = function () {
 >   - 按照这个规则依次往上找，直到磁盘根目录还找不到，最后报错：Can not find moudle xxx
 > - **一个项目有且仅有一个 node_modules 而且是存放到项目的根目录**
 
-```
+```javascript
 // 如果是非路径形式的模块标识
 // 路径形式的模块：
 //  ./ 当前目录，不可省略
